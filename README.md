@@ -428,11 +428,3 @@ Se cubre con:
 4. El modelo de glucosa mostro un ajuste moderado, lo que sugiere que hay factores clinicos adicionales que no estan presentes en el dataset.
 5. El modelo de energia logro un ajuste alto; la temperatura resulto ser la variable mas influyente.
 6. La exportacion con `joblib` y el despliegue con Streamlit permiten reutilizar los modelos en una aplicacion sencilla de prediccion.
-
-## 12. Posibles mejoras
-
-- incluir validacion cruzada adicional,
-- comparar con modelos no lineales,
-- agregar mas variables explicativas,
-- guardar visualizaciones en una carpeta `reports/`,
-- desplegar la app en la nube.

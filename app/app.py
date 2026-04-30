@@ -798,12 +798,7 @@ def render_result(prediction: float, inputs: dict, cfg: dict, stats: dict) -> No
         raw_value = float(inputs[field["column"]])
         formatted = format_number(raw_value, field["decimals"])
         input_cards.append(
-            f"""
-            <div class="result-chip">
-                <span>{field["label"]}</span>
-                <strong>{formatted}</strong>
-            </div>
-            """
+            f'<div class="result-chip"><span>{field["label"]}</span><strong>{formatted}</strong></div>'
         )
 
     meta_cards = [
@@ -821,31 +816,24 @@ def render_result(prediction: float, inputs: dict, cfg: dict, stats: dict) -> No
         ),
     ]
 
+    input_cards_html = "".join(input_cards)
     meta_html = "".join(
-        f"""
-        <div class="result-meta-item">
-            <span>{label}</span>
-            <strong>{value}</strong>
-        </div>
-        """
+        f'<div class="result-meta-item"><span>{label}</span><strong>{value}</strong></div>'
         for label, value in meta_cards
     )
+    result_html = f"""
+    <div class="result-card">
+        <div class="result-kicker">{cfg["badge"]} | {band_title}</div>
+        <h3>{cfg["target_name"]}</h3>
+        <div class="result-value">{format_value(prediction, cfg)}</div>
+        <p class="result-body">{band_copy} En esta simulación el valor queda {delta_copy.lower()}.</p>
+        <div class="result-grid">{input_cards_html}</div>
+        <div class="result-meta">{meta_html}</div>
+    </div>
+    """
 
     st.markdown(
-        f"""
-        <div class="result-card">
-            <div class="result-kicker">{cfg["badge"]} | {band_title}</div>
-            <h3>{cfg["target_name"]}</h3>
-            <div class="result-value">{format_value(prediction, cfg)}</div>
-            <p class="result-body">{band_copy} En esta simulación el valor queda {delta_copy.lower()}.</p>
-            <div class="result-grid">
-                {"".join(input_cards)}
-            </div>
-            <div class="result-meta">
-                {meta_html}
-            </div>
-        </div>
-        """,
+        result_html,
         unsafe_allow_html=True,
     )
 
